@@ -1,21 +1,40 @@
-const camelize = require('camelize');
-const snakeize = require('snakeize');
+// const camelize = require('camelize');
+// const snakeize = require('snakeize');
 const connection = require('./connection');
 
-const insert = async (sale) => {};
+const createSale = async () => {
+  const [result] = await connection.execute(
+    'INSERT INTO sales(date) VALUE(NOW())',
+  );
+  return result.insertId;
+};
 
-const getAll = async () => {};
+const insert = async (saleId, saleData) => {
+  await connection.execute(
+    `INSERT INTO sales_products(sale_id, product_id, quantity) VALUES ${saleData
+      .map(() => '(?, ?, ?)')
+      .join(',')}`,
+    saleData
+      .map((product) => [saleId, product.productId, product.quantity])
+      .flat(1),
+  );
 
-const findById = async (saleId) => {};
+  return saleData;
+};
 
-const updateById = async (saleId) => {};
+// const getAll = async () => {};
 
-const deleteById = async (saleId) => {};
+// const findById = async (saleId) => {};
+
+// const updateById = async (saleId) => {};
+
+// const deleteById = async (saleId) => {};
 
 module.exports = {
+  createSale,
   insert,
-  getAll,
-  findById,
-  updateById,
-  deleteById,
+  // getAll,
+  // findById,
+  // updateById,
+  // deleteById,
 };

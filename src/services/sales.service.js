@@ -1,20 +1,33 @@
 const { salesModel } = require('../models');
-const { validateSaleId } = require('./validations/validateValues');
+const { validateProductId } = require('./validations/validateValues');
 
-const listSales = async () => {};
+// const listSales = async () => {};
 
-const listSaleById = async ({ id }) => {};
+// const listSaleById = async ({ id }) => {};
 
-const createSale = async ({ id, name }) => {};
+const createSale = async (saleData) => {
+  const verifyProducts = await Promise
+    .all(saleData.map((product) => validateProductId(product.productId)));
+  
+  const isValid = verifyProducts.find((error) => error.type !== null);
+  
+  if (isValid !== undefined) {
+    return isValid;
+  }
 
-const updateSaleById = async ({ id }) => {};
+  const saleId = await salesModel.createSale();
+  const insertResult = await salesModel.insert(saleId, saleData);
+  return { type: null, message: { id: saleId, itemsSold: insertResult } };
+  };
 
-const deleteSaleById = async ({ id }) => {};
+// const updateSaleById = async ({ id }) => {};
+
+// const deleteSaleById = async ({ id }) => {};
 
 module.exports = {
-  listSales,
-  listSaleById,
+  // listSales,
+  // listSaleById,
   createSale,
-  updateSaleById,
-  deleteSaleById,
+  // updateSaleById,
+  // deleteSaleById,
 };
