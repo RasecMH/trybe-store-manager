@@ -1,9 +1,8 @@
 const { productsModel, salesModel } = require('../../models');
 
 const validateProductId = async (id) => {
-  const product = await productsModel.findById(id);
+  const [product] = await productsModel.findById(id);
   if (!product) return { type: 'ITEM_NOT_FOUND', message: 'Product not found' };
-
   return { type: null, message: '' };
 };
 

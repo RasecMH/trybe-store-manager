@@ -10,23 +10,23 @@ const listProductById = async (id) => {
   const error = await validateProductId(id);
   if (error.type) return error;
 
-  const result = await productsModel.findById(id);
+  const [result] = await productsModel.findById(id);
   return { type: null, message: result };
 };
 
-const listProductsBySearchTerm = async ({ searchTerm }) => {};
+// const listProductsBySearchTerm = async ({ searchTerm }) => {};
 
-const createProduct = async ({ id, name }) => {};
+// const createProduct = async ({ id, name }) => {};
 
-const updateProductById = async ({ id }) => {};
+// const updateProductById = async ({ id }) => {};
 
-const deleteProductById = async ({ id }) => {};
+// const deleteProductById = async ({ id }) => {};
 
 module.exports = {
   listProducts,
   listProductById,
-  listProductsBySearchTerm,
-  createProduct,
-  updateProductById,
-  deleteProductById,
+  // listProductsBySearchTerm,
+  // createProduct,
+  // updateProductById,
+  // deleteProductById,
 };
