@@ -7,7 +7,7 @@ const validateProductId = async (id) => {
 };
 
 const validateSaleId = async (id) => {
-  const sale = await salesModel.findById(id);
+  const [sale] = await salesModel.findById(id);
   if (!sale) return { type: 'ITEM_NOT_FOUND', message: 'Sale not found' };
 
   return { type: null, message: '' };

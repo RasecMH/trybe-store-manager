@@ -4,9 +4,9 @@ const validateSalesFields = require('../middlewares/validateSalesFields');
 
 const router = express.Router();
 
-// router.get('/', salesController);
+router.get('/', salesController.listSales);
 
-// router.get('/:id', salesController);
+router.get('/:id', salesController.listSaleById);
 
 router.post('/', validateSalesFields, salesController.createSale);
 

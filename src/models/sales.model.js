@@ -1,4 +1,4 @@
-// const camelize = require('camelize');
+const camelize = require('camelize');
 // const snakeize = require('snakeize');
 const connection = require('./connection');
 
@@ -22,9 +22,31 @@ const insert = async (saleId, saleData) => {
   return saleData;
 };
 
-// const getAll = async () => {};
+const getAll = async () => {
+  const [result] = await connection.execute(
+    `SELECT 
+      sales_products.sale_id,
+      sales.date,
+      sales_products.product_id,
+      sales_products.quantity
+    FROM sales_products
+    JOIN sales ON sales_products.sale_id = sales.id
+    ORDER BY sales_products.sale_id, sales_products.product_id`,
+);
+  return camelize(result);
+};
 
-// const findById = async (saleId) => {};
+const findById = async (saleId) => {
+  const [result] = await connection.execute(
+    `SELECT date, product_id, quantity
+    FROM sales_products
+    JOIN sales ON id = sales_products.sale_id
+    WHERE id = ?
+    ORDER BY product_id`, [saleId],
+  );
+  console.log(result);
+  return camelize(result);
+};
 
 // const updateById = async (saleId) => {};
 
@@ -33,8 +55,8 @@ const insert = async (saleId, saleData) => {
 module.exports = {
   createSale,
   insert,
-  // getAll,
-  // findById,
+  getAll,
+  findById,
   // updateById,
   // deleteById,
 };

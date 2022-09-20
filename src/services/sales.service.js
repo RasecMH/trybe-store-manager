@@ -1,9 +1,18 @@
 const { salesModel } = require('../models');
-const { validateProductId } = require('./validations/validateValues');
+const { validateProductId, validateSaleId } = require('./validations/validateValues');
 
-// const listSales = async () => {};
+const listSales = async () => {
+   const result = await salesModel.getAll();
+  return { type: null, message: result };
+};
 
-// const listSaleById = async ({ id }) => {};
+const listSaleById = async (id) => {
+  const error = await validateSaleId(id);
+  if (error.type) return error;
+
+  const result = await salesModel.findById(id);
+  return { type: null, message: result };
+};
 
 const createSale = async (saleData) => {
   const verifyProducts = await Promise
@@ -25,8 +34,8 @@ const createSale = async (saleData) => {
 // const deleteSaleById = async ({ id }) => {};
 
 module.exports = {
-  // listSales,
-  // listSaleById,
+  listSales,
+  listSaleById,
   createSale,
   // updateSaleById,
   // deleteSaleById,
