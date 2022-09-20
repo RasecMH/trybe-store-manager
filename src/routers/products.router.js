@@ -4,16 +4,20 @@ const validateProductsFields = require('../middlewares/validateProductsFields');
 
 const router = express.Router();
 
-router.get('/', productsController);
+router.get('/', productsController.listProducts);
 
-router.get('/:id', productsController);
+router.get('/:id', productsController.listProductById);
 
-router.get('/search?q=searchTerm', productsController);
+router.get('/search?q=searchTerm', productsController.listProductsBySearchTerm);
 
-router.post('/', validateProductsFields, productsController);
+router.post('/', validateProductsFields, productsController.createProduct);
 
-router.put('/:id', validateProductsFields, productsController);
+router.put(
+  '/:id',
+  validateProductsFields,
+  productsController.updateProductById,
+);
 
-router.delete('/:id', productsController);
+router.delete('/:id', productsController.deleteProductById);
 
 module.exports = router;

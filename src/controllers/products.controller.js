@@ -1,8 +1,18 @@
 const { productsService } = require('../services');
+const { mapError } = require('../utils/errorMap');
 
-const listProducts = async (req, res) => {};
+const listProducts = async (req, res) => {
+  const { type, message } = await productsService.listProducts();
+  if (type) return res.status(mapError(type)).json(message);
+  res.status(200).json(message);
+};
 
-const listProductById = async (req, res) => {};
+const listProductById = async (req, res) => {
+  const { id } = req.params;
+  const { type, message } = await productsService.listProductById(id);
+  if (type) return res.status(mapError(type)).json(message);
+  res.status(200).json(message);
+};
 
 const listProductsBySearchTerm = async (req, res) => {};
 

@@ -1,9 +1,18 @@
 const { productsModel } = require('../models');
 const { validateProductId } = require('./validations/validateValues');
 
-const listProducts = async () => {};
+const listProducts = async () => {
+  const result = await productsModel.getAll();
+  return { type: null, message: result };
+};
 
-const listProductById = async ({ id }) => {};
+const listProductById = async (id) => {
+  const error = await validateProductId(id);
+  if (error.type) return error;
+
+  const result = await productsModel.findById(id);
+  return { type: null, message: result };
+};
 
 const listProductsBySearchTerm = async ({ searchTerm }) => {};
 
