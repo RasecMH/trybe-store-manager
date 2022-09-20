@@ -2,7 +2,10 @@
 // const snakeize = require('snakeize');
 const connection = require('./connection');
 
-// const insert = async (product) => {};
+const insert = async (productName) => {
+  const [result] = await connection.execute('INSERT INTO products(name) VALUE(?)', [productName]);
+  return result.insertId;
+};
 
 const getAll = async () => {
   const [result] = await connection.execute('SELECT * FROM products');
@@ -23,7 +26,7 @@ const findById = async (productId) => {
 // const deleteById = async (productId) => {};
 
 module.exports = {
-  // insert,
+  insert,
   getAll,
   findById,
   // findByName,

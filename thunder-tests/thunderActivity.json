@@ -1,0 +1,21 @@
+[
+  {
+    "_id": "fdbf21b4-6a91-4cac-bccf-bb2c85589f2d",
+    "colId": "history",
+    "containerId": "",
+    "name": "http://localhost:3000/products",
+    "url": "http://localhost:3000/products",
+    "method": "POST",
+    "sortNum": 0,
+    "created": "2022-09-20T19:02:39.176Z",
+    "modified": "2022-09-20T19:09:23.138Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"name\": \"ProdutosadX\"\n}",
+      "form": []
+    },
+    "tests": []
+  }
+]

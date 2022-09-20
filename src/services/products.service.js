@@ -16,7 +16,10 @@ const listProductById = async (id) => {
 
 // const listProductsBySearchTerm = async ({ searchTerm }) => {};
 
-// const createProduct = async ({ id, name }) => {};
+const createProduct = async (name) => {
+  const result = await productsModel.insert(name);
+  return { type: null, message: { id: result, name } };
+};
 
 // const updateProductById = async ({ id }) => {};
 
@@ -26,7 +29,7 @@ module.exports = {
   listProducts,
   listProductById,
   // listProductsBySearchTerm,
-  // createProduct,
+  createProduct,
   // updateProductById,
   // deleteProductById,
 };
