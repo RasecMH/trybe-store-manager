@@ -29,7 +29,22 @@ const createSale = async (saleData) => {
   return { type: null, message: { id: saleId, itemsSold: insertResult } };
   };
 
-// const updateSaleById = async ({ id }) => {};
+const updateSaleById = async (id, saleData) => {
+  const verifyProducts = await Promise
+    .all(saleData.map((product) => validateProductId(product.productId)));
+  
+  const isValid = verifyProducts.find((error) => error.type !== null);
+  
+  if (isValid !== undefined) {
+    return isValid;
+  }
+
+  const error = await validateSaleId(id);
+  if (error.type) return error;
+
+  await salesModel.updateById(id, saleData);
+  return { type: null, message: { saleId: id, itemsUpdated: saleData } };
+};
 
 const deleteSaleById = async (id) => {
   const error = await validateSaleId(id);
@@ -43,6 +58,6 @@ module.exports = {
   listSales,
   listSaleById,
   createSale,
-  // updateSaleById,
+  updateSaleById,
   deleteSaleById,
 };

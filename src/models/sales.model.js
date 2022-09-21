@@ -11,8 +11,9 @@ const createSale = async () => {
 
 const insert = async (saleId, saleData) => {
   await connection.execute(
-    `INSERT INTO sales_products(sale_id, product_id, quantity) VALUES ${
-    saleData.map(() => '(?, ?, ?)')}`,
+    `INSERT INTO sales_products(sale_id, product_id, quantity) VALUES ${saleData.map(
+      () => '(?, ?, ?)',
+    )}`,
     saleData
       .map((product) => [saleId, product.productId, product.quantity])
       .flat(1),
@@ -48,17 +49,25 @@ const findById = async (saleId) => {
   return camelize(result);
 };
 
-// const updateById = async (saleId) => {};
+const updateById = async (saleId, saleData) => {
+  await Promise.all(
+    saleData.map(async (product) =>
+      connection.execute(
+        `UPDATE sales_products SET quantity = ?
+           WHERE sale_id = ? AND product_id = ?`,
+        [product.quantity, saleId, product.productId],
+      )),
+  );
+};
 
-const deleteById = async (saleId) => connection.execute(
-  'DELETE FROM sales WHERE id = ?', [saleId],
-);
+const deleteById = async (saleId) =>
+  connection.execute('DELETE FROM sales WHERE id = ?', [saleId]);
 
 module.exports = {
   createSale,
   insert,
   getAll,
   findById,
-  // updateById,
+  updateById,
   deleteById,
 };
