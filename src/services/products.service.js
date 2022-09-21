@@ -21,7 +21,13 @@ const createProduct = async (name) => {
   return { type: null, message: { id: result, name } };
 };
 
-// const updateProductById = async ({ id }) => {};
+const updateProductById = async (id, name) => {
+  const error = await validateProductId(id);
+  if (error.type) return error;
+
+  const result = await productsModel.updateById(id, name);
+  return { type: null, message: result };
+};
 
 // const deleteProductById = async ({ id }) => {};
 
@@ -30,6 +36,6 @@ module.exports = {
   listProductById,
   // listProductsBySearchTerm,
   createProduct,
-  // updateProductById,
+  updateProductById,
   // deleteProductById,
 };

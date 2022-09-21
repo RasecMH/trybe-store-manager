@@ -12,11 +12,11 @@ router.get('/:id', productsController.listProductById);
 
 router.post('/', validateProductsFields, productsController.createProduct);
 
-// router.put(
-//   '/:id',
-//   validateProductsFields,
-//   productsController.updateProductById,
-// );
+router.put(
+  '/:id',
+  validateProductsFields,
+  productsController.updateProductById,
+);
 
 // router.delete('/:id', productsController.deleteProductById);
 

@@ -3,7 +3,10 @@
 const connection = require('./connection');
 
 const insert = async (productName) => {
-  const [result] = await connection.execute('INSERT INTO products(name) VALUE(?)', [productName]);
+  const [result] = await connection.execute(
+    'INSERT INTO products(name) VALUE(?)',
+    [productName],
+  );
   return result.insertId;
 };
 
@@ -14,14 +17,22 @@ const getAll = async () => {
 };
 
 const findById = async (productId) => {
-  const [result] = await connection.execute('SELECT * FROM products WHERE id = ?', [productId]);
-  // console.log(result);
+  const [result] = await connection.execute(
+    'SELECT * FROM products WHERE id = ?',
+    [productId],
+  );
   return result;
 };
 
 // const findByName = async (productName) => {};
 
-// const updateById = async (productId) => {};
+const updateById = async (productId, name) => {
+  await connection.execute('UPDATE products SET name = ? WHERE id = ?', [
+    name,
+    productId,
+  ]);
+  return { id: productId, name };
+};
 
 // const deleteById = async (productId) => {};
 
@@ -30,6 +41,6 @@ module.exports = {
   getAll,
   findById,
   // findByName,
-  // updateById,
+  updateById,
   // deleteById,
 };

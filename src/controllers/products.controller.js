@@ -23,7 +23,13 @@ const createProduct = async (req, res) => {
   res.status(201).json(message);
 };
 
-// const updateProductById = async (req, res) => {};
+const updateProductById = async (req, res) => {
+  const { id } = req.params;
+  const { name } = req.body;
+  const { type, message } = await productsService.updateProductById(id, name);
+  if (type) return res.status(mapError(type)).json({ message });
+  res.status(200).json(message);
+};
 
 // const deleteProductById = async (req, res) => {};
 
@@ -32,6 +38,6 @@ module.exports = {
   listProductById,
   // listProductsBySearchTerm,
   createProduct,
-  // updateProductById,
+  updateProductById,
   // deleteProductById,
 };
