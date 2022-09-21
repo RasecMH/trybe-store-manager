@@ -1,5 +1,5 @@
-const { salesModel } = require('../models');
-const { validateProductId, validateSaleId } = require('./validations/validateValues');
+const salesModel = require('../models/sales.model');
+const validateValues = require('./validations/validateValues');
 
 const listSales = async () => {
    const result = await salesModel.getAll();
@@ -7,7 +7,7 @@ const listSales = async () => {
 };
 
 const listSaleById = async (id) => {
-  const error = await validateSaleId(id);
+  const error = await validateValues.validateSaleId(id);
   if (error.type) return error;
 
   const result = await salesModel.findById(id);
@@ -16,7 +16,7 @@ const listSaleById = async (id) => {
 
 const createSale = async (saleData) => {
   const verifyProducts = await Promise
-    .all(saleData.map((product) => validateProductId(product.productId)));
+    .all(saleData.map((product) => validateValues.validateProductId(product.productId)));
   
   const isValid = verifyProducts.find((error) => error.type !== null);
   
@@ -31,7 +31,7 @@ const createSale = async (saleData) => {
 
 const updateSaleById = async (id, saleData) => {
   const verifyProducts = await Promise
-    .all(saleData.map((product) => validateProductId(product.productId)));
+    .all(saleData.map((product) => validateValues.validateProductId(product.productId)));
   
   const isValid = verifyProducts.find((error) => error.type !== null);
   
@@ -39,7 +39,7 @@ const updateSaleById = async (id, saleData) => {
     return isValid;
   }
 
-  const error = await validateSaleId(id);
+  const error = await validateValues.validateSaleId(id);
   if (error.type) return error;
 
   await salesModel.updateById(id, saleData);
@@ -47,7 +47,7 @@ const updateSaleById = async (id, saleData) => {
 };
 
 const deleteSaleById = async (id) => {
-  const error = await validateSaleId(id);
+  const error = await validateValues.validateSaleId(id);
   if (error.type) return error;
 
   const result = await salesModel.deleteById(id);
