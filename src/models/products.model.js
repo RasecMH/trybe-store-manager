@@ -34,7 +34,9 @@ const updateById = async (productId, name) => {
   return { id: productId, name };
 };
 
-// const deleteById = async (productId) => {};
+const deleteById = async (productId) => connection.execute(
+  'DELETE FROM products WHERE id = ?', [productId],
+);
 
 module.exports = {
   insert,
@@ -42,5 +44,5 @@ module.exports = {
   findById,
   // findByName,
   updateById,
-  // deleteById,
+  deleteById,
 };

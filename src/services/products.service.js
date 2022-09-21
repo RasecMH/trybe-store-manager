@@ -29,7 +29,13 @@ const updateProductById = async (id, name) => {
   return { type: null, message: result };
 };
 
-// const deleteProductById = async ({ id }) => {};
+const deleteProductById = async (id) => {
+  const error = await validateProductId(id);
+  if (error.type) return error;
+
+  const result = await productsModel.deleteById(id);
+  return { type: null, message: result };
+};
 
 module.exports = {
   listProducts,
@@ -37,5 +43,5 @@ module.exports = {
   // listProductsBySearchTerm,
   createProduct,
   updateProductById,
-  // deleteProductById,
+  deleteProductById,
 };
