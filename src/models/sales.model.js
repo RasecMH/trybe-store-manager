@@ -11,9 +11,8 @@ const createSale = async () => {
 
 const insert = async (saleId, saleData) => {
   await connection.execute(
-    `INSERT INTO sales_products(sale_id, product_id, quantity) VALUES ${saleData
-      .map(() => '(?, ?, ?)')
-      .join(',')}`,
+    `INSERT INTO sales_products(sale_id, product_id, quantity) VALUES ${
+    saleData.map(() => '(?, ?, ?)')}`,
     saleData
       .map((product) => [saleId, product.productId, product.quantity])
       .flat(1),
@@ -32,7 +31,7 @@ const getAll = async () => {
     FROM sales_products
     JOIN sales ON sales_products.sale_id = sales.id
     ORDER BY sales_products.sale_id, sales_products.product_id`,
-);
+  );
   return camelize(result);
 };
 
@@ -42,7 +41,8 @@ const findById = async (saleId) => {
     FROM sales_products
     JOIN sales ON id = sales_products.sale_id
     WHERE id = ?
-    ORDER BY product_id`, [saleId],
+    ORDER BY product_id`,
+    [saleId],
   );
   console.log(result);
   return camelize(result);
