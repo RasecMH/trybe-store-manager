@@ -4,11 +4,11 @@ const validateProductsFields = require('../middlewares/validateProductsFields');
 
 const router = express.Router();
 
+router.get('/search', productsController.listProductsBySearchTerm);
+
 router.get('/', productsController.listProducts);
 
 router.get('/:id', productsController.listProductById);
-
-// router.get('/search?q=searchTerm', productsController.listProductsBySearchTerm);
 
 router.post('/', validateProductsFields, productsController.createProduct);
 

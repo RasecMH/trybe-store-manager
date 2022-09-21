@@ -14,7 +14,10 @@ const listProductById = async (id) => {
   return { type: null, message: result };
 };
 
-// const listProductsBySearchTerm = async ({ searchTerm }) => {};
+const listProductsBySearchTerm = async (searchTerm) => {
+  const products = await productsModel.findByName(searchTerm);
+  return products;
+};
 
 const createProduct = async (name) => {
   const result = await productsModel.insert(name);
@@ -40,7 +43,7 @@ const deleteProductById = async (id) => {
 module.exports = {
   listProducts,
   listProductById,
-  // listProductsBySearchTerm,
+  listProductsBySearchTerm,
   createProduct,
   updateProductById,
   deleteProductById,

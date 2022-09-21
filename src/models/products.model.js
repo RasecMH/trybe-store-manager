@@ -24,7 +24,13 @@ const findById = async (productId) => {
   return result;
 };
 
-// const findByName = async (productName) => {};
+const findByName = async (productName) => {
+  const [result] = await connection.execute(
+    'SELECT * FROM products WHERE products.name LIKE ?',
+    [`%${productName}%`],
+  );
+  return result;
+};
 
 const updateById = async (productId, name) => {
   await connection.execute('UPDATE products SET name = ? WHERE id = ?', [
@@ -42,7 +48,7 @@ module.exports = {
   insert,
   getAll,
   findById,
-  // findByName,
+  findByName,
   updateById,
   deleteById,
 };

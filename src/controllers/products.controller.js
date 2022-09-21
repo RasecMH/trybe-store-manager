@@ -14,7 +14,14 @@ const listProductById = async (req, res) => {
   res.status(200).json(message);
 };
 
-// const listProductsBySearchTerm = async (req, res) => {};
+const listProductsBySearchTerm = async (req, res) => {
+  const { q } = req.query;
+  console.log(q);
+  console.log('passou');
+  const products = await productsService.listProductsBySearchTerm(q);
+
+  return res.status(200).json(products);
+};
 
 const createProduct = async (req, res) => {
   const { name } = req.body;
@@ -41,7 +48,7 @@ const deleteProductById = async (req, res) => {
 module.exports = {
   listProducts,
   listProductById,
-  // listProductsBySearchTerm,
+  listProductsBySearchTerm,
   createProduct,
   updateProductById,
   deleteProductById,
