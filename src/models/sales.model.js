@@ -50,7 +50,9 @@ const findById = async (saleId) => {
 
 // const updateById = async (saleId) => {};
 
-// const deleteById = async (saleId) => {};
+const deleteById = async (saleId) => connection.execute(
+  'DELETE FROM sales WHERE id = ?', [saleId],
+);
 
 module.exports = {
   createSale,
@@ -58,5 +60,5 @@ module.exports = {
   getAll,
   findById,
   // updateById,
-  // deleteById,
+  deleteById,
 };

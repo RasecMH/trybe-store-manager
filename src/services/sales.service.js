@@ -31,12 +31,18 @@ const createSale = async (saleData) => {
 
 // const updateSaleById = async ({ id }) => {};
 
-// const deleteSaleById = async ({ id }) => {};
+const deleteSaleById = async (id) => {
+  const error = await validateSaleId(id);
+  if (error.type) return error;
+
+  const result = await salesModel.deleteById(id);
+  return { type: null, message: result };
+};
 
 module.exports = {
   listSales,
   listSaleById,
   createSale,
   // updateSaleById,
-  // deleteSaleById,
+  deleteSaleById,
 };
